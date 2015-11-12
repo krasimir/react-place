@@ -63,11 +63,12 @@ export default class Location extends React.Component {
     var fail = R.compose(
       updateAutocomplete,
       (text) => [{ description: text }],
-      (text) => NO_MATCHING.replace('{{value}}', text),
-      value
+      (text) => {
+        return NO_MATCHING.replace('{{value}}', text);
+      }
     );
 
-    this._getPredictions(value).then(updateAutocomplete).catch(fail);
+    this._getPredictions(value).then(updateAutocomplete, fail);
   }
 
   _handleAutocompleteSelect() {
@@ -104,7 +105,7 @@ export default class Location extends React.Component {
         if (result !== null) {
           resolve(result);
         } else {
-          reject([]);
+          reject(text);
         }
       });
     });
