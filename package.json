@@ -1,5 +1,5 @@
 {
-  "name": "react-geo-location",
+  "name": "react-location",
   "version": "0.1.0",
   "description": "React geo location component based on Google Maps",
   "main": "lib/index.js",
