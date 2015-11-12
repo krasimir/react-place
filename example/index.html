@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>React Location</title>
+</head>
+<body>
+  <div id="container"></div>
+  <script src="//maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+  <script src="app.js"></script>
+  <script>
+    // It was really annoying while
+    // developing to click in the field every time so ...
+    setTimeout(function () {
+      document.querySelector('input').focus();
+    }, 500);
+  </script>
+</body>
+</html>
