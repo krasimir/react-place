@@ -14,8 +14,8 @@ export default class Location extends React.Component {
     return (
       <input
         type='text'
-        className=''
-        placeholder='Where are you?'
+        className={ this.props.className }
+        placeholder={ this.props.placeholder || 'Type your location here.' }
       />
     );
   }
@@ -34,10 +34,9 @@ export default class Location extends React.Component {
         return Awesomplete.$.create('li', {
           innerHTML: text.replace(
             RegExp(Awesomplete.$.regExpEscape(input.trim()), 'gi'),
-            '<mark class="needsclick">$&</mark>'
+            '<mark>$&</mark>'
           ),
-          'aria-selected': 'false',
-          'class': 'needsclick' // Disable fastclick for suggestions
+          'aria-selected': 'false'
         });
       }
     };
@@ -95,20 +94,24 @@ export default class Location extends React.Component {
   _getPredictions(text) {
     var AutocompleteService = global.google.maps.places.AutocompleteService;
     var service = new AutocompleteService();
+    var isThereAnyText = !!text;
 
-    return new Promise((resolve, reject) => {
-      service.getPlacePredictions({
-        input: text,
-        componentRestrictions: { country: 'us' },
-        types: ['(regions)']
-      }, (result) => {
-        if (result !== null) {
-          resolve(result);
-        } else {
-          reject(text);
-        }
+    if (isThereAnyText) {
+      return new Promise((resolve, reject) => {
+        service.getPlacePredictions({
+          input: text,
+          componentRestrictions: { country: 'us' },
+          types: ['(regions)']
+        }, (result) => {
+          if (result !== null) {
+            resolve(result);
+          } else {
+            reject(text);
+          }
+        });
       });
-    });
+    }
+    return new Promise((resolve, reject) => {});
 
   }
 
@@ -130,5 +133,7 @@ export default class Location extends React.Component {
 };
 
 Location.propTypes = {
-  onLocationSet: React.PropTypes.func
+  onLocationSet: React.PropTypes.func,
+  className: React.PropTypes.string,
+  placeholder: React.PropTypes.string
 };
