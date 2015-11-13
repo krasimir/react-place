@@ -22,6 +22,7 @@ export default class Location extends React.Component {
 
   componentWillMount() {
     this._googlePredictions = [];
+    this._country = this.props.country || 'US';
   }
 
   componentDidMount() {
@@ -49,6 +50,10 @@ export default class Location extends React.Component {
     this._autocomplete = new Awesomplete(input, config);
 
     input.addEventListener('keyup', this._handleInputChange.bind(this));
+  }
+
+  updateCountry(country) {
+    this._country = country;
   }
 
   _handleInputChange(event) {
@@ -104,7 +109,7 @@ export default class Location extends React.Component {
       return new Promise((resolve, reject) => {
         service.getPlacePredictions({
           input: text,
-          componentRestrictions: { country: 'us' },
+          componentRestrictions: { country: this._country },
           types: ['(regions)']
         }, (result) => {
           if (result !== null) {
@@ -116,7 +121,6 @@ export default class Location extends React.Component {
       });
     }
     return new Promise((resolve, reject) => {});
-
   }
 
   _getCoordinates(placeId) {
@@ -139,5 +143,6 @@ export default class Location extends React.Component {
 Location.propTypes = {
   onLocationSet: React.PropTypes.func,
   className: React.PropTypes.string,
-  placeholder: React.PropTypes.string
+  placeholder: React.PropTypes.string,
+  country: React.PropTypes.string
 };
