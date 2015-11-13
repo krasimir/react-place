@@ -7,6 +7,7 @@ import R from 'ramda';
 import Promise from 'promise-polyfill';
 
 const NO_MATCHING = 'Unrecognised {{value}}, please check and re-enter.';
+const DEFAULT_COUNTRY = 'US';
 
 export default class Location extends React.Component {
 
@@ -22,7 +23,8 @@ export default class Location extends React.Component {
 
   componentWillMount() {
     this._googlePredictions = [];
-    this._country = this.props.country || 'US';
+    this._country = this.props.country || DEFAULT_COUNTRY;
+    this._noMatching = this.props.noMatching || NO_MATCHING;
   }
 
   componentDidMount() {
@@ -68,7 +70,7 @@ export default class Location extends React.Component {
       updateAutocomplete,
       (text) => [{ description: text }],
       (text) => {
-        return NO_MATCHING.replace('{{value}}', text);
+        return this._noMatching.replace('{{value}}', text);
       }
     );
     var navKeys = [38, 40, 13, 27];
@@ -144,5 +146,6 @@ Location.propTypes = {
   onLocationSet: React.PropTypes.func,
   className: React.PropTypes.string,
   placeholder: React.PropTypes.string,
-  country: React.PropTypes.string
+  country: React.PropTypes.string,
+  noMatching: React.PropTypes.string
 };

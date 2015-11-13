@@ -4,6 +4,7 @@ import Location from './Location';
 
 window.onload = () => {
   var country = document.querySelector('#country-dropdown');
+  var container = document.querySelector('#container');
   var location;
 
   location = ReactDOM.render(
@@ -11,8 +12,9 @@ window.onload = () => {
       className='location'
       placeholder='Where are you?'
       country={ country.value }
+      noMatching='Sorry, I can not find {{value}}.'
       />,
-    document.querySelector('#container')
+    container
   );
 
   country.addEventListener('change', () => {
