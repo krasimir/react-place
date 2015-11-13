@@ -51,7 +51,7 @@ export default class Location extends React.Component {
     input.addEventListener('keyup', this._handleInputChange.bind(this));
   }
 
-  _handleInputChange() {
+  _handleInputChange(event) {
     var value = this._getInputValue();
     var updateAutocomplete = R.compose(
       this._autocomplete.evaluate.bind(this._autocomplete),
@@ -66,8 +66,12 @@ export default class Location extends React.Component {
         return NO_MATCHING.replace('{{value}}', text);
       }
     );
+    var navKeys = [38, 40, 13, 27];
+    var isItNavKey = navKeys.indexOf(event.keyCode) >= 0;
 
-    this._getPredictions(value).then(updateAutocomplete, fail);
+    if (!isItNavKey) {
+      this._getPredictions(value).then(updateAutocomplete, fail);
+    }
   }
 
   _handleAutocompleteSelect() {
