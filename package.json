@@ -1,6 +1,6 @@
 {
   "name": "react-place",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "React geo location component based on Google Maps",
   "main": "lib/Location.js",
   "dependencies": {},
@@ -22,7 +22,7 @@
   },
   "scripts": {
     "dev": "WEBPACK_ENV=dev ./node_modules/.bin/webpack --watch --inline",
-    "publish": "./node_modules/.bin/babel ./src --out-dir ./lib --source-maps --presets es2015,react",
+    "prepublish": "./node_modules/.bin/babel ./src --out-dir ./lib --source-maps --presets es2015,react",
     "test": "karma start",
     "test:ci": "watch 'npm run test' src/"
   },
