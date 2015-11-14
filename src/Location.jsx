@@ -3,11 +3,21 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import Awesomplete from 'awesomplete';
-import R from 'ramda';
 import Promise from 'promise-polyfill';
 
 const NO_MATCHING = 'Unrecognised {{value}}, please check and re-enter.';
 const DEFAULT_COUNTRY = 'US';
+
+var compose = function () {
+  var fns = arguments;
+
+  return function (result) {
+    for (let i = fns.length - 1; i >= 0; i--) {
+      result = fns[i].call(this, result);
+    }
+    return result;
+  };
+};
 
 export default class Location extends React.Component {
 
@@ -60,13 +70,16 @@ export default class Location extends React.Component {
 
   _handleInputChange(event) {
     var value = this._getInputValue();
-    var updateAutocomplete = R.compose(
+    var updateAutocomplete = compose(
       this._autocomplete.evaluate.bind(this._autocomplete),
       (list) => this._autocomplete.list = list,
-      R.map(R.prop('description')),
+      (list) => list.map((item) => item.description),
+      (list) => {
+        return list;
+      },
       (results) => this._googlePredictions = results
     );
-    var fail = R.compose(
+    var fail = compose(
       updateAutocomplete,
       (text) => [{ description: text }],
       (text) => {
@@ -83,8 +96,13 @@ export default class Location extends React.Component {
 
   _handleAutocompleteSelect() {
     var value = this._getInputValue();
-    var validate = (item) => item && item.place_id ? item.place_id : false;
-    var getPlaceId = R.compose(validate, R.find(R.propEq('description', value)));
+    var find = (list) => {
+      let l = list.filter(item => item.description === value);
+
+      return l.length > 0 ? l[0] : false;
+    };
+    var validate = item => item && item.place_id ? item.place_id : false;
+    var getPlaceId = compose(validate, find);
     var success = (location) => {
       this.props.onLocationSet && this.props.onLocationSet({
         description: value,
