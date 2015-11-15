@@ -41,3 +41,9 @@ If you need to update the country dynamically use the following API:
 ```js
 location.updateCountry('FR');
 ```
+
+## Testing
+
+```
+npm run test
+```

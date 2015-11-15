@@ -1,9 +1,13 @@
 {
   "name": "react-place",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "React geo location component based on Google Maps",
   "main": "lib/Location.js",
-  "dependencies": {},
+  "dependencies": {
+    "awesomplete": "1.0.0",
+    "react": "0.14.2",
+    "react-dom": "0.14.2"
+  },
   "author": {
     "name": "Krasimir Tsonev",
     "email": "info@krasimirtsonev.com",
@@ -25,11 +29,6 @@
     "prepublish": "./node_modules/.bin/babel ./src --out-dir ./lib --source-maps --presets es2015,react",
     "test": "karma start",
     "test:ci": "watch 'npm run test' src/"
-  },
-  "dependencies": {
-    "awesomplete": "1.0.0",
-    "react": "0.14.0",
-    "react-dom": "0.14.0" 
   },
   "devDependencies": {
     "babel-cli": "6.1.18",
@@ -56,6 +55,7 @@
     "karma-sourcemap-loader": "0.3.5",
     "karma-webpack": "1.7.0",
     "promise-polyfill": "2.1.0",
+    "react-addons-test-utils": "0.14.2",
     "watch": "0.16.0",
     "webpack": "1.12.2",
     "webpack-dev-server": "1.11.0"

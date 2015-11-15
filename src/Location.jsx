@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import Awesomplete from 'awesomplete';
 import Promise from 'promise-polyfill';
+import google from './vendor/google';
 
 const NO_MATCHING = 'Unrecognised {{value}}, please check and re-enter.';
 const DEFAULT_COUNTRY = 'US';
@@ -55,13 +56,16 @@ export default class Location extends React.Component {
     };
 
     input = ReactDom.findDOMNode(this);
+    this._autocomplete = new Awesomplete(input, config);
+
     input.addEventListener(
       'awesomplete-selectcomplete',
       this._handleAutocompleteSelect.bind(this)
     );
-    this._autocomplete = new Awesomplete(input, config);
-
-    input.addEventListener('keyup', this._handleInputChange.bind(this));
+    input.addEventListener(
+      'keyup',
+      this._handleInputChange.bind(this)
+    );
   }
 
   updateCountry(country) {
@@ -74,9 +78,6 @@ export default class Location extends React.Component {
       this._autocomplete.evaluate.bind(this._autocomplete),
       (list) => this._autocomplete.list = list,
       (list) => list.map((item) => item.description),
-      (list) => {
-        return list;
-      },
       (results) => this._googlePredictions = results
     );
     var fail = compose(
@@ -121,8 +122,7 @@ export default class Location extends React.Component {
   }
 
   _getPredictions(text) {
-    var AutocompleteService = global.google.maps.places.AutocompleteService;
-    var service = new AutocompleteService();
+    var service = (this.props.google || google).createAutocompleteService();
     var isThereAnyText = !!text;
 
     if (isThereAnyText) {
@@ -144,8 +144,7 @@ export default class Location extends React.Component {
   }
 
   _getCoordinates(placeId) {
-    var Geocoder = global.google.maps.Geocoder;
-    var geocoder = new Geocoder();
+    var geocoder = (this.props.google || google).createGeocoder();
 
     return new Promise((resolve, reject) => {
       geocoder.geocode({ placeId: placeId }, (results, status) => {
@@ -165,5 +164,6 @@ Location.propTypes = {
   className: React.PropTypes.string,
   placeholder: React.PropTypes.string,
   country: React.PropTypes.string,
-  noMatching: React.PropTypes.string
+  noMatching: React.PropTypes.string,
+  google: React.PropTypes.object
 };
