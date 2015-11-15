@@ -26,7 +26,7 @@
   },
   "scripts": {
     "dev": "WEBPACK_ENV=dev ./node_modules/.bin/webpack --watch --inline",
-    "prepublish": "./node_modules/.bin/babel ./src --out-dir ./lib --source-maps --presets es2015,react",
+    "prepublish": "./node_modules/.bin/babel ./src/Location.jsx --out-dir ./lib --source-maps --presets es2015,react",
     "test": "karma start",
     "test:ci": "watch 'npm run test' src/"
   },
