@@ -44,6 +44,11 @@ If you need to update the country dynamically use the following API:
 location.updateCountry('FR');
 ```
 
+## Dependencies
+
+* [Awesomplete](http://leaverou.github.io/awesomplete/) - installed automatically while running `npm install react-place`. It comes with the component so you don't need to have it on the page.
+* Google Maps API - you have to add `<script src="//maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>` on the page to have the component working.
+
 ## Testing
 
 ```
