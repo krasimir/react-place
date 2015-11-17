@@ -2,6 +2,8 @@
 
 The component uses Google Maps API to fetch the locations. It uses [Awesomplete](http://leaverou.github.io/awesomplete/) as a hard dependency for the dropdown.
 
+Check out the demo [here](http://krasimir.github.io/react-place).
+
 ![react-place](http://work.krasimirtsonev.com/react-place/react-place.gif)
 
 ## Installation
