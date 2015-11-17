@@ -3,7 +3,6 @@ node_modules
 npm-debug.log
 public
 tmp
-example/build
 
 # Created by https://www.gitignore.io
 
