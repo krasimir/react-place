@@ -19965,10 +19965,10 @@
 			"blur": this.close.bind(this),
 			"keydown": function(evt) {
 				var c = evt.keyCode;
+	
 				// If the dropdown `ul` is in view, then act on keydown for the following keys:
 				// Enter / Esc / Up / Down
 				if(me.opened) {
-					console.log('keydown keydown=' + c, me.selected);
 					if (c === 13 && me.selected) { // Enter
 						evt.preventDefault();
 						me.select();
@@ -20062,7 +20062,7 @@
 	
 		next: function () {
 			var count = this.ul.children.length;
-			console.log('next count=' + count);
+	
 			this.goto(this.index < count - 1? this.index + 1 : -1);
 		},
 	
@@ -20114,6 +20114,7 @@
 		evaluate: function() {
 			var me = this;
 			var value = this.input.value;
+	
 			if (value.length >= this.minChars && this._list.length > 0) {
 				this.index = -1;
 				// Populate list with options that match
@@ -20129,7 +20130,7 @@
 	
 						return i < me.maxItems - 1;
 					});
-				console.log('evaluate children=' + this.ul.children.length);
+	
 				if (this.ul.children.length === 0) {
 					this.close();
 				} else {
