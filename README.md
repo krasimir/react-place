@@ -16,7 +16,10 @@ npm install react-place
 
 * Of course [react](https://www.npmjs.com/package/react) and [react-dom](https://www.npmjs.com/package/react-dom). You need to have these modules installed.
 * [Awesomplete](http://leaverou.github.io/awesomplete/) - installed automatically while running `npm install react-place`. It comes with the component so you don't need to have it loaded on the page.
-* Google Maps API - you have to add `<script src="//maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>` on the page to have the component working.
+* Google Maps API - you have to add
+```
+<script src="//maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>```
+to your page to have the component working.
 
 ## Usage (ES6)
 
