@@ -1,6 +1,6 @@
 {
   "name": "react-place",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "React geo location component based on Google Maps",
   "main": "lib/Location.js",
   "author": {
@@ -29,11 +29,11 @@
   },
   "dependencies": {
     "awesomplete": "1.0.0",
-    "react": "0.14.2",
-    "react-dom": "0.14.2",
     "promise-polyfill": "2.1.0"
   },
   "devDependencies": {
+    "react": "0.14.2",
+    "react-dom": "0.14.2",
     "babel-cli": "6.1.18",
     "babel-core": "5.8.24",
     "babel-eslint": "4.1.3",
