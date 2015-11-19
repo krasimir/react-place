@@ -1,6 +1,6 @@
 {
   "name": "react-place",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "React geo location component based on Google Maps",
   "main": "lib/Location.js",
   "author": {
@@ -22,18 +22,16 @@
   },
   "scripts": {
     "dev": "WEBPACK_ENV=dev ./node_modules/.bin/webpack --watch --inline",
-    "prepublish": "./node_modules/.bin/babel ./src --out-dir ./lib --source-maps --presets es2015,react --plugins babel-plugin-add-module-exports",
+    "prepublish": "./node_modules/.bin/babel ./src --out-dir ./lib --source-maps --presets es2015,react --plugins babel-plugin-add-module-exports && ./node_modules/.bin/browserify ./lib/Location.js -o ./build/react-place.js --transform browserify-global-shim --standalone ReactPlace && ./node_modules/.bin/uglifyjs ./build/react-place.js --compress --mangle --output ./build/react-place.min.js --source-map ./build/react-place.min.js.map",
     "test": "karma start",
     "test:ci": "watch 'npm run test' src/",
-    "example-es5": "./node_modules/.bin/browserify ./example-es5/src/index.js -o ./example-es5/build/app.js"
+    "example-es5-browserify": "./node_modules/.bin/browserify ./example-es5-browserify/src/index.js -o ./example-es5-browserify/build/app.js"
   },
   "dependencies": {
     "awesomplete": "1.0.0",
     "promise-polyfill": "2.1.0"
   },
   "devDependencies": {
-    "react": "0.14.2",
-    "react-dom": "0.14.2",
     "babel-cli": "6.1.18",
     "babel-core": "5.8.24",
     "babel-eslint": "4.1.3",
@@ -42,6 +40,7 @@
     "babel-preset-es2015": "6.1.18",
     "babel-preset-react": "6.1.18",
     "browserify": "12.0.1",
+    "browserify-global-shim": "1.0.0",
     "chai": "3.3.0",
     "core-js": "1.1.4",
     "eslint": "1.4.3",
@@ -59,9 +58,16 @@
     "karma-sinon-chai": "1.1.0",
     "karma-sourcemap-loader": "0.3.5",
     "karma-webpack": "1.7.0",
+    "react": "0.14.2",
     "react-addons-test-utils": "0.14.2",
+    "react-dom": "0.14.2",
+    "uglify-js": "2.6.1",
     "watch": "0.16.0",
     "webpack": "1.12.2",
     "webpack-dev-server": "1.11.0"
+  },
+  "browserify-global-shim": {
+    "react": "React",
+    "react-dom": "ReactDOM"
   }
 }

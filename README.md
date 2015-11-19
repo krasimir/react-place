@@ -46,7 +46,7 @@ location = ReactDOM.render(
 );
 ```
 
-## Usage ES5
+## Usage ES5 (with bundling)
 
 ```js
 var React = require('react');
@@ -76,6 +76,40 @@ If you need to update the country dynamically use the following API:
 
 ```js
 location.updateCountry('FR');
+```
+
+## Usage ES5 (no bundling)
+
+Download [react-place.min.js]() file and add it to your page.
+
+```js
+<script src="//maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+<script src="https://fb.me/react-0.14.3.js"></script>
+<script src="https://fb.me/react-dom-0.14.3.js"></script>
+<script src="react-place.min.js"></script>
+<script>
+
+  var createLocation = React.createFactory(ReactPlace);
+
+  function onLocationSet(data) {
+    // data.description
+    // data.coords.lat
+    // data.coords.lng
+  }
+
+  window.onload = function () {
+    var container = document.querySelector('...');
+    var LocationComp = createLocation({
+      className: 'location',
+      placeholder: 'Where are you?',
+      country: country.value,
+      noMatching: 'Sorry, I can not find {{value}}.',
+      onLocationSet: onLocationSet
+    });
+    var l = ReactDOM.render(LocationComp, container);
+  };
+
+</script>
 ```
 
 ## Testing

@@ -409,37 +409,6 @@
     <pre></pre>
   </div>
   <script src="//maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
-  <script src="https://fb.me/react-0.14.3.js"></script>
-  <script src="https://fb.me/react-dom-0.14.3.js"></script>
-  <script src="../build/react-place.min.js"></script>
-  <script>
-
-    var createLocation = React.createFactory(ReactPlace);
-
-    function onLocationSet(value) {
-      var pre = document.querySelector('pre');
-
-      pre.innerHTML = JSON.stringify(value, null, 2);
-    }
-
-    window.onload = function () {
-      var country = document.querySelector('#country-dropdown');
-      var container = document.querySelector('#container');
-      var LocationComp = createLocation({
-        className: 'location',
-        placeholder: 'Where are you?',
-        country: country.value,
-        noMatching: 'Sorry, I can not find {{value}}.',
-        onLocationSet: onLocationSet
-      });
-      var l = ReactDOM.render(LocationComp, container);
-
-      country.addEventListener('change', function () {
-        l.updateCountry(country.value);
-      });
-
-    };
-
-  </script>
+  <script src="./build/app.js"></script>
 </body>
 </html>

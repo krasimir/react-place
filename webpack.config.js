@@ -6,12 +6,12 @@ var host = '0.0.0.0';
 var port = '9000';
 
 var config = {
-  entry: './example/src',
+  entry: './example-es6/src',
   devtool: 'source-map',
   output: {
-    path: __dirname + '/example/build',
+    path: __dirname + '/example-es6/build',
     filename: 'app.js',
-    publicPath: __dirname + '/example'
+    publicPath: __dirname + '/example-es6'
   },
   module: {
     loaders: [
@@ -34,7 +34,7 @@ var config = {
 };
 
 new WebpackDevServer(webpack(config), {
-  contentBase: './example',
+  contentBase: './example-es6',
   hot: true,
   debug: true
 }).listen(port, host, function (err, result) {
