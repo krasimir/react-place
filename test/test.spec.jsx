@@ -76,7 +76,7 @@ describe('Given an instance of the Component', function () {
           setTimeout(function () {
             expect(onLocationSet).to.be.called;
             done();
-          }, 10)
+          }, 10);
         }, 10);
       });
     });

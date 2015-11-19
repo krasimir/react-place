@@ -10,7 +10,7 @@ export default function predictions() {
         }
       ],
       'place_id': 'ChIJOwg_06VPwokRYv534QaPC8g',
-      'reference': 'CkQzAAAAB3oI7S19SFHmL-eVun30ogpnFHK3QdG0Co-TOAa9QyEofyktZu2rLPzSXBQZEa9pSgK4FrgdRhf_rJo0IMy9oRIQz4RgrKXtAvCx67hZfouqdxoUszD1riby-J2Bfdk6RAT76NGUXqg',
+      'reference': '...',
       'terms': [
         {
           'offset': 0,
@@ -41,7 +41,7 @@ export default function predictions() {
         }
       ],
       'place_id': 'ChIJD_qB3F8X6YcRDraFbXmLUD4',
-      'reference': 'CkQzAAAAoWgqR1yXcBxTp8yg03GuOLhWZXuTmPVKPEfnvroJuuip1GnIUyibAO6L7jQMYDH985x7nGosIWUhhqtCKIMPixIQz1oMvxeBKInoSI_H2sLzpBoUsofELWyKfYOdHCQom3A3lHY-r7U',
+      'reference': '...',
       'terms': [
         {
           'offset': 0,
@@ -72,7 +72,7 @@ export default function predictions() {
         }
       ],
       'place_id': 'ChIJqaUj8fBLzEwRZ5UY3sHGz90',
-      'reference': 'CjQvAAAA9lSx9JG6wbdRslBAbkW4nbfcYXSolY__5nDSsPqarikxo7Qy2z12imbT1xo1pfHOEhCsubBa8Y-5ISR6pSvwoJvVGhQzVXnWeVith1jiix5SyCExvUHZ3w',
+      'reference': '...',
       'terms': [
         {
           'offset': 0,
@@ -99,7 +99,7 @@ export default function predictions() {
         }
       ],
       'place_id': 'ChIJn0AAnpX7wIkRjW0_-Ad70iw',
-      'reference': 'CkQxAAAAybOeBoFckHMaxf7pynq2r6-2RYSMXNQCNVmywKRMlcPEOyt5rjhiv3KS5vzJKyJRYlsx1ukQfmbqVSmTKN92fxIQMmBIMPnBt0gt-NuXLF-LuBoU7vIUdKCfdWvnzxEo8gRNHrhBMao',
+      'reference': '...',
       'terms': [
         {
           'offset': 0,
@@ -126,7 +126,7 @@ export default function predictions() {
         }
       ],
       'place_id': 'ChIJHQ6aMnBTwokRc-T-3CrcvOE',
-      'reference': 'CkQxAAAA6gvrJKkTa2JuhmAaMBOpKC33TDXO9Wjv7F0cvy2qwWAte8__aosTnQCc9trmUDyRvTNAJlpO6-_yllPkQJuTHxIQtV2UNHZDQ0lvqKqyuYAVlhoUmXmCAedHjUMeHctwIrqG4RqORUk',
+      'reference': '...',
       'terms': [
         {
           'offset': 0,
