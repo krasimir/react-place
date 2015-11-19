@@ -12,7 +12,7 @@ Check out the demo [here](http://krasimir.github.io/react-place).
 npm install react-place
 ```
 
-## Usage
+## Usage (ES6)
 
 ```js
 import React from 'react';
@@ -38,6 +38,32 @@ location = ReactDOM.render(
     />,
   container
 );
+```
+
+## Usage ES5
+
+```js
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Location = require('react-place');
+var createLocation = React.createFactory(Location);
+
+function onLocationSet (data) {
+  // data.description
+  // data.coords.lat
+  // data.coords.lng
+}
+
+var container = document.querySelector('#container');
+var LocationComp = createLocation({
+  className: 'location',
+  placeholder: 'Where are you?',
+  country: country.value,
+  noMatching: 'Sorry, I can not find {{value}}.',
+  onLocationSet: onLocationSet
+});
+
+var location = ReactDOM.render(LocationComp, container);
 ```
 
 If you need to update the country dynamically use the following API:
