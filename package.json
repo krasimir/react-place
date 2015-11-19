@@ -1,6 +1,6 @@
 {
   "name": "react-place",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "React geo location component based on Google Maps",
   "main": "lib/Location.js",
   "author": {
