@@ -21,7 +21,7 @@
     "url": "git@github.com:krasimir/react-place.git"
   },
   "scripts": {
-    "dev": "WEBPACK_ENV=dev ./node_modules/.bin/webpack --watch --inline",
+    "dev": "./node_modules/.bin/webpack --watch --inline",
     "prepublish": "./node_modules/.bin/babel ./src --out-dir ./lib --source-maps --presets es2015,react --plugins babel-plugin-add-module-exports && ./node_modules/.bin/browserify ./lib/Location.js -o ./build/react-place.js --transform browserify-global-shim --standalone ReactPlace && ./node_modules/.bin/uglifyjs ./build/react-place.js --compress --mangle --output ./build/react-place.min.js --source-map ./build/react-place.min.js.map",
     "test": "karma start",
     "test:ci": "watch 'npm run test' src/",
