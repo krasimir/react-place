@@ -80,7 +80,7 @@ location.updateCountry('FR');
 
 ## Usage ES5 (no bundling)
 
-Download [react-place.min.js]() file and add it to your page.
+Download [react-place.min.js](https://github.com/krasimir/react-place/blob/master/build/react-place.min.js) file and add it to your page.
 
 ```js
 <script src="//maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
