@@ -1,6 +1,6 @@
 {
   "name": "react-place",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "React geo location component based on Google Maps",
   "main": "lib/Location.js",
   "author": {
@@ -21,11 +21,11 @@
     "url": "git@github.com:krasimir/react-place.git"
   },
   "scripts": {
-    "dev": "./node_modules/.bin/webpack --watch --inline",
-    "prepublish": "./node_modules/.bin/babel ./src --out-dir ./lib --source-maps --presets es2015,react --plugins babel-plugin-add-module-exports && ./node_modules/.bin/browserify ./lib/Location.js -o ./build/react-place.js --transform browserify-global-shim --standalone ReactPlace && ./node_modules/.bin/uglifyjs ./build/react-place.js --compress --mangle --output ./build/react-place.min.js --source-map ./build/react-place.min.js.map",
+    "dev": "webpack --watch --inline",
+    "prepublish": "babel ./src --out-dir ./lib --source-maps --presets es2015,react --plugins babel-plugin-add-module-exports && browserify ./lib/Location.js -o ./build/react-place.js --transform browserify-global-shim --standalone ReactPlace && uglifyjs ./build/react-place.js --compress --mangle --output ./build/react-place.min.js --source-map ./build/react-place.min.js.map",
     "test": "karma start",
     "test:ci": "watch 'npm run test' src/",
-    "example-es5-browserify": "./node_modules/.bin/browserify ./example-es5-browserify/src/index.js -o ./example-es5-browserify/build/app.js"
+    "example-es5-browserify": "browserify ./example-es5-browserify/src/index.js -o ./example-es5-browserify/build/app.js"
   },
   "dependencies": {
     "awesomplete": "1.0.0",
