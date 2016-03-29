@@ -46,8 +46,6 @@
 
 	'use strict';
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -56,9 +54,11 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _srcLocationJsx = __webpack_require__(159);
+	var _Location = __webpack_require__(159);
 	
-	var _srcLocationJsx2 = _interopRequireDefault(_srcLocationJsx);
+	var _Location2 = _interopRequireDefault(_Location);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function onLocationSet(value) {
 	  var pre = document.querySelector('pre');
@@ -71,7 +71,7 @@
 	  var container = document.querySelector('#container');
 	  var location;
 	
-	  location = _reactDom2['default'].render(_react2['default'].createElement(_srcLocationJsx2['default'], {
+	  location = _reactDom2.default.render(_react2.default.createElement(_Location2.default, {
 	    className: 'location',
 	    placeholder: 'Where are you?',
 	    country: country.value,
@@ -134,6 +134,7 @@
 	});
 	
 	React.__SECRET_DOM_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactDOM;
+	React.__SECRET_DOM_SERVER_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactDOMServer;
 	
 	module.exports = React;
 
@@ -1098,7 +1099,7 @@
 	 * will remain to ensure logic does not differ in production.
 	 */
 	
-	var invariant = function (condition, format, a, b, c, d, e, f) {
+	function invariant(condition, format, a, b, c, d, e, f) {
 	  if (process.env.NODE_ENV !== 'production') {
 	    if (format === undefined) {
 	      throw new Error('invariant requires an error message argument');
@@ -1112,15 +1113,16 @@
 	    } else {
 	      var args = [a, b, c, d, e, f];
 	      var argIndex = 0;
-	      error = new Error('Invariant Violation: ' + format.replace(/%s/g, function () {
+	      error = new Error(format.replace(/%s/g, function () {
 	        return args[argIndex++];
 	      }));
+	      error.name = 'Invariant Violation';
 	    }
 	
 	    error.framesToPop = 1; // we don't care about invariant's own frame
 	    throw error;
 	  }
-	};
+	}
 	
 	module.exports = invariant;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
@@ -9339,6 +9341,7 @@
 	 */
 	var EventInterface = {
 	  type: null,
+	  target: null,
 	  // currentTarget is set when dispatching; no use in copying it here
 	  currentTarget: emptyFunction.thatReturnsNull,
 	  eventPhase: null,
@@ -9372,8 +9375,6 @@
 	  this.dispatchConfig = dispatchConfig;
 	  this.dispatchMarker = dispatchMarker;
 	  this.nativeEvent = nativeEvent;
-	  this.target = nativeEventTarget;
-	  this.currentTarget = nativeEventTarget;
 	
 	  var Interface = this.constructor.Interface;
 	  for (var propName in Interface) {
@@ -9384,7 +9385,11 @@
 	    if (normalize) {
 	      this[propName] = normalize(nativeEvent);
 	    } else {
-	      this[propName] = nativeEvent[propName];
+	      if (propName === 'target') {
+	        this.target = nativeEventTarget;
+	      } else {
+	        this[propName] = nativeEvent[propName];
+	      }
 	    }
 	  }
 	
@@ -10484,6 +10489,7 @@
 	    multiple: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
 	    muted: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
 	    name: null,
+	    nonce: MUST_USE_ATTRIBUTE,
 	    noValidate: HAS_BOOLEAN_VALUE,
 	    open: HAS_BOOLEAN_VALUE,
 	    optimum: null,
@@ -10495,6 +10501,7 @@
 	    readOnly: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
 	    rel: null,
 	    required: HAS_BOOLEAN_VALUE,
+	    reversed: HAS_BOOLEAN_VALUE,
 	    role: MUST_USE_ATTRIBUTE,
 	    rows: MUST_USE_ATTRIBUTE | HAS_POSITIVE_NUMERIC_VALUE,
 	    rowSpan: null,
@@ -10545,8 +10552,8 @@
 	     */
 	    // autoCapitalize and autoCorrect are supported in Mobile Safari for
 	    // keyboard hints.
-	    autoCapitalize: null,
-	    autoCorrect: null,
+	    autoCapitalize: MUST_USE_ATTRIBUTE,
+	    autoCorrect: MUST_USE_ATTRIBUTE,
 	    // autoSave allows WebKit/Blink to persist values of input fields on page reloads
 	    autoSave: null,
 	    // color is for Safari mask-icon link
@@ -10577,9 +10584,7 @@
 	    httpEquiv: 'http-equiv'
 	  },
 	  DOMPropertyNames: {
-	    autoCapitalize: 'autocapitalize',
 	    autoComplete: 'autocomplete',
-	    autoCorrect: 'autocorrect',
 	    autoFocus: 'autofocus',
 	    autoPlay: 'autoplay',
 	    autoSave: 'autosave',
@@ -13233,7 +13238,10 @@
 	      }
 	    });
 	
-	    nativeProps.children = content;
+	    if (content) {
+	      nativeProps.children = content;
+	    }
+	
 	    return nativeProps;
 	  }
 	
@@ -13658,7 +13666,7 @@
 	    var value = LinkedValueUtils.getValue(props);
 	
 	    if (value != null) {
-	      updateOptions(this, props, value);
+	      updateOptions(this, Boolean(props.multiple), value);
 	    }
 	  }
 	}
@@ -16693,11 +16701,14 @@
 	 * @typechecks
 	 */
 	
+	/* eslint-disable fb-www/typeof-undefined */
+	
 	/**
 	 * Same as document.activeElement but wraps in a try-catch block. In IE it is
 	 * not safe to call document.activeElement if there is nothing focused.
 	 *
-	 * The activeElement will be null only if the document or document body is not yet defined.
+	 * The activeElement will be null only if the document or document body is not
+	 * yet defined.
 	 */
 	'use strict';
 	
@@ -16705,7 +16716,6 @@
 	  if (typeof document === 'undefined') {
 	    return null;
 	  }
-	
 	  try {
 	    return document.activeElement || document.body;
 	  } catch (e) {
@@ -18445,7 +18455,9 @@
 	  'setValueForProperty': 'update attribute',
 	  'setValueForAttribute': 'update attribute',
 	  'deleteValueForProperty': 'remove attribute',
-	  'dangerouslyReplaceNodeWithMarkupByID': 'replace'
+	  'setValueForStyles': 'update styles',
+	  'replaceNodeWithMarkup': 'replace',
+	  'updateTextContent': 'set textContent'
 	};
 	
 	function getTotalTime(measurements) {
@@ -18637,18 +18649,23 @@
 	'use strict';
 	
 	var performance = __webpack_require__(145);
-	var curPerformance = performance;
+	
+	var performanceNow;
 	
 	/**
 	 * Detect if we can use `window.performance.now()` and gracefully fallback to
 	 * `Date.now()` if it doesn't exist. We need to support Firefox < 15 for now
 	 * because of Facebook's testing infrastructure.
 	 */
-	if (!curPerformance || !curPerformance.now) {
-	  curPerformance = Date;
+	if (performance.now) {
+	  performanceNow = function () {
+	    return performance.now();
+	  };
+	} else {
+	  performanceNow = function () {
+	    return Date.now();
+	  };
 	}
-	
-	var performanceNow = curPerformance.now.bind(curPerformance);
 	
 	module.exports = performanceNow;
 
@@ -18697,7 +18714,7 @@
 	
 	'use strict';
 	
-	module.exports = '0.14.2';
+	module.exports = '0.14.7';
 
 /***/ },
 /* 147 */
@@ -19674,19 +19691,11 @@
 
 	'use strict';
 	
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(1);
 	
@@ -19704,9 +19713,17 @@
 	
 	var _promisePolyfill2 = _interopRequireDefault(_promisePolyfill);
 	
-	var _vendorGoogle = __webpack_require__(163);
+	var _google = __webpack_require__(163);
 	
-	var _vendorGoogle2 = _interopRequireDefault(_vendorGoogle);
+	var _google2 = _interopRequireDefault(_google);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var NO_MATCHING = 'Unrecognised {{value}}, please check and re-enter.';
 	var DEFAULT_COUNTRY = 'US';
@@ -19722,19 +19739,19 @@
 	  };
 	};
 	
-	var Location = (function (_React$Component) {
+	var Location = function (_React$Component) {
 	  _inherits(Location, _React$Component);
 	
 	  function Location() {
 	    _classCallCheck(this, Location);
 	
-	    _get(Object.getPrototypeOf(Location.prototype), 'constructor', this).apply(this, arguments);
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Location).apply(this, arguments));
 	  }
 	
 	  _createClass(Location, [{
 	    key: 'render',
 	    value: function render() {
-	      return _react2['default'].createElement('input', {
+	      return _react2.default.createElement('input', {
 	        type: 'text',
 	        className: this.props.className,
 	        placeholder: this.props.placeholder || 'Type your location here.'
@@ -19758,15 +19775,15 @@
 	          return 0;
 	        },
 	        item: function item(text, input) {
-	          return _awesomplete2['default'].$.create('li', {
-	            innerHTML: text.replace(RegExp(_awesomplete2['default'].$.regExpEscape(input.trim()), 'gi'), '<mark>$&</mark>'),
+	          return _awesomplete2.default.$.create('li', {
+	            innerHTML: text.replace(RegExp(_awesomplete2.default.$.regExpEscape(input.trim()), 'gi'), '<mark>$&</mark>'),
 	            'aria-selected': 'false'
 	          });
 	        }
 	      };
 	
-	      input = _reactDom2['default'].findDOMNode(this);
-	      this._autocomplete = new _awesomplete2['default'](input, config);
+	      input = _reactDom2.default.findDOMNode(this);
+	      this._autocomplete = new _awesomplete2.default(input, config);
 	
 	      input.addEventListener('awesomplete-selectcomplete', this._handleAutocompleteSelect.bind(this));
 	      input.addEventListener('keyup', this._handleInputChange.bind(this));
@@ -19779,22 +19796,22 @@
 	  }, {
 	    key: '_handleInputChange',
 	    value: function _handleInputChange(event) {
-	      var _this = this;
+	      var _this2 = this;
 	
 	      var value = this._getInputValue();
 	      var updateAutocomplete = compose(this._autocomplete.evaluate.bind(this._autocomplete), function (list) {
-	        return _this._autocomplete.list = list;
+	        return _this2._autocomplete.list = list;
 	      }, function (list) {
 	        return list.map(function (item) {
 	          return item.description;
 	        });
 	      }, function (results) {
-	        return _this._googlePredictions = results;
+	        return _this2._googlePredictions = results;
 	      });
 	      var fail = compose(updateAutocomplete, function (text) {
 	        return [{ description: text }];
 	      }, function (text) {
-	        return _this._noMatching.replace('{{value}}', text);
+	        return _this2._noMatching.replace('{{value}}', text);
 	      });
 	      var navKeys = [38, 40, 13, 27];
 	      var isItNavKey = navKeys.indexOf(event.keyCode) >= 0;
@@ -19806,7 +19823,7 @@
 	  }, {
 	    key: '_handleAutocompleteSelect',
 	    value: function _handleAutocompleteSelect() {
-	      var _this2 = this;
+	      var _this3 = this;
 	
 	      var value = this._getInputValue();
 	      var find = function find(list) {
@@ -19821,7 +19838,7 @@
 	      };
 	      var getPlaceId = compose(validate, find);
 	      var success = function success(location) {
-	        _this2.props.onLocationSet && _this2.props.onLocationSet({
+	        _this3.props.onLocationSet && _this3.props.onLocationSet({
 	          description: value,
 	          coords: {
 	            lat: location.lat(),
@@ -19835,21 +19852,21 @@
 	  }, {
 	    key: '_getInputValue',
 	    value: function _getInputValue() {
-	      return _reactDom2['default'].findDOMNode(this).value;
+	      return _reactDom2.default.findDOMNode(this).value;
 	    }
 	  }, {
 	    key: '_getPredictions',
 	    value: function _getPredictions(text) {
-	      var _this3 = this;
+	      var _this4 = this;
 	
-	      var service = (this.props.google || _vendorGoogle2['default']).createAutocompleteService();
+	      var service = (this.props.google || _google2.default).createAutocompleteService();
 	      var isThereAnyText = !!text;
 	
 	      if (isThereAnyText) {
-	        return new _promisePolyfill2['default'](function (resolve, reject) {
+	        return new _promisePolyfill2.default(function (resolve, reject) {
 	          service.getPlacePredictions({
 	            input: text,
-	            componentRestrictions: { country: _this3._country },
+	            componentRestrictions: { country: _this4._country },
 	            types: ['(regions)']
 	          }, function (result) {
 	            if (result !== null) {
@@ -19860,14 +19877,14 @@
 	          });
 	        });
 	      }
-	      return new _promisePolyfill2['default'](function (resolve, reject) {});
+	      return new _promisePolyfill2.default(function (resolve, reject) {});
 	    }
 	  }, {
 	    key: '_getCoordinates',
 	    value: function _getCoordinates(placeId) {
-	      var geocoder = (this.props.google || _vendorGoogle2['default']).createGeocoder();
+	      var geocoder = (this.props.google || _google2.default).createGeocoder();
 	
-	      return new _promisePolyfill2['default'](function (resolve, reject) {
+	      return new _promisePolyfill2.default(function (resolve, reject) {
 	        geocoder.geocode({ placeId: placeId }, function (results, status) {
 	          if (status === 'OK' && results && results.length > 0) {
 	            resolve(results[0].geometry.location);
@@ -19880,24 +19897,23 @@
 	  }]);
 	
 	  return Location;
-	})(_react2['default'].Component);
+	}(_react2.default.Component);
 	
-	exports['default'] = Location;
+	exports.default = Location;
 	;
 	
 	Location.propTypes = {
-	  onLocationSet: _react2['default'].PropTypes.func,
-	  className: _react2['default'].PropTypes.string,
-	  placeholder: _react2['default'].PropTypes.string,
-	  country: _react2['default'].PropTypes.string,
-	  noMatching: _react2['default'].PropTypes.string,
-	  google: _react2['default'].PropTypes.object
+	  onLocationSet: _react2.default.PropTypes.func,
+	  className: _react2.default.PropTypes.string,
+	  placeholder: _react2.default.PropTypes.string,
+	  country: _react2.default.PropTypes.string,
+	  noMatching: _react2.default.PropTypes.string,
+	  google: _react2.default.PropTypes.object
 	};
-	module.exports = exports['default'];
 
 /***/ },
 /* 160 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Simple, lightweight, usable local autocomplete library for modern browsers
@@ -19919,21 +19935,15 @@
 	
 		o = o || {};
 	
-		configure.call(this, {
+		configure(this, {
 			minChars: 2,
 			maxItems: 10,
 			autoFirst: false,
+			data: _.DATA,
 			filter: _.FILTER_CONTAINS,
 			sort: _.SORT_BYLENGTH,
-			item: function (text, input) {
-				return $.create("li", {
-					innerHTML: text.replace(RegExp($.regExpEscape(input.trim()), "gi"), "<mark>$&</mark>"),
-					"aria-selected": "false"
-				});
-			},
-			replace: function (text) {
-				this.input.value = text;
-			}
+			item: _.ITEM,
+			replace: _.REPLACE
 		}, o);
 	
 		this.index = -1;
@@ -19946,7 +19956,7 @@
 		});
 	
 		this.ul = $.create("ul", {
-			hidden: "",
+			hidden: "hidden",
 			inside: this.container
 		});
 	
@@ -19995,15 +20005,16 @@
 					li = li.parentNode;
 				}
 	
-				if (li) {
-					me.select(li);
+				if (li && evt.button === 0) {  // Only select on left click
+					evt.preventDefault();
+					me.select(li, evt.target);
 				}
 			}
 		}});
 	
 		if (this.input.hasAttribute("list")) {
-			this.list = "#" + input.getAttribute("list");
-			input.removeAttribute("list");
+			this.list = "#" + this.input.getAttribute("list");
+			this.input.removeAttribute("list");
 		}
 		else {
 			this.list = this.input.getAttribute("data-list") || o.list || [];
@@ -20024,9 +20035,18 @@
 				list = $(list);
 	
 				if (list && list.children) {
-					this._list = slice.apply(list.children).map(function (el) {
-						return el.textContent.trim();
+					var items = [];
+					slice.apply(list.children).forEach(function (el) {
+						if (!el.disabled) {
+							var text = el.textContent.trim();
+							var value = el.value || text;
+							var label = el.label || text;
+							if (value !== "") {
+								items.push({ label: label, value: value });
+							}
+						}
 					});
+					this._list = items;
 				}
 			}
 	
@@ -20040,7 +20060,7 @@
 		},
 	
 		get opened() {
-			return this.ul && this.ul.getAttribute("hidden") == null;
+			return !this.ul.hasAttribute("hidden");
 		},
 	
 		close: function () {
@@ -20085,28 +20105,34 @@
 			if (i > -1 && lis.length > 0) {
 				lis[i].setAttribute("aria-selected", "true");
 				this.status.textContent = lis[i].textContent;
-			}
 	
-			$.fire(this.input, "awesomplete-highlight");
+				$.fire(this.input, "awesomplete-highlight", {
+					text: this.suggestions[this.index]
+				});
+			}
 		},
 	
-		select: function (selected) {
-			selected = selected || this.ul.children[this.index];
+		select: function (selected, origin) {
+			if (selected) {
+				this.index = $.siblingIndex(selected);
+			} else {
+				selected = this.ul.children[this.index];
+			}
 	
 			if (selected) {
-				var prevented;
+				var suggestion = this.suggestions[this.index];
 	
-				$.fire(this.input, "awesomplete-select", {
-					text: selected.textContent,
-					preventDefault: function () {
-						prevented = true;
-					}
+				var allowed = $.fire(this.input, "awesomplete-select", {
+					text: suggestion,
+					origin: origin || selected
 				});
 	
-				if (!prevented) {
-					this.replace(selected.textContent);
+				if (allowed) {
+					this.replace(suggestion);
 					this.close();
-					$.fire(this.input, "awesomplete-selectcomplete");
+					$.fire(this.input, "awesomplete-selectcomplete", {
+						text: suggestion
+					});
 				}
 			}
 		},
@@ -20120,15 +20146,18 @@
 				// Populate list with options that match
 				this.ul.innerHTML = "";
 	
-				this._list
+				this.suggestions = this._list
+					.map(function(item) {
+						return new Suggestion(me.data(item, value));
+					})
 					.filter(function(item) {
 						return me.filter(item, value);
 					})
 					.sort(this.sort)
-					.every(function(text, i) {
-						me.ul.appendChild(me.item(text, value));
+					.slice(0, this.maxItems);
 	
-						return i < me.maxItems - 1;
+				this.suggestions.forEach(function(text) {
+						me.ul.appendChild(me.item(text, value));
 					});
 	
 				if (this.ul.children.length === 0) {
@@ -20163,28 +20192,57 @@
 		return a < b? -1 : 1;
 	};
 	
+	_.ITEM = function (text, input) {
+		var html = input === '' ? text : text.replace(RegExp($.regExpEscape(input.trim()), "gi"), "<mark>$&</mark>");
+		return $.create("li", {
+			innerHTML: html,
+			"aria-selected": "false"
+		});
+	};
+	
+	_.REPLACE = function (text) {
+		this.input.value = text.value;
+	};
+	
+	_.DATA = function (item/*, input*/) { return item; };
+	
 	// Private functions
 	
-	function configure(properties, o) {
+	function Suggestion(data) {
+		var o = Array.isArray(data)
+		  ? { label: data[0], value: data[1] }
+		  : typeof data === "object" && "label" in data && "value" in data ? data : { label: data, value: data };
+	
+		this.label = o.label || o.value;
+		this.value = o.value;
+	}
+	Object.defineProperty(Suggestion.prototype = Object.create(String.prototype), "length", {
+		get: function() { return this.label.length; }
+	});
+	Suggestion.prototype.toString = Suggestion.prototype.valueOf = function () {
+		return "" + this.label;
+	};
+	
+	function configure(instance, properties, o) {
 		for (var i in properties) {
 			var initial = properties[i],
-			    attrValue = this.input.getAttribute("data-" + i.toLowerCase());
+			    attrValue = instance.input.getAttribute("data-" + i.toLowerCase());
 	
 			if (typeof initial === "number") {
-				this[i] = parseInt(attrValue);
+				instance[i] = parseInt(attrValue);
 			}
 			else if (initial === false) { // Boolean options must be false by default anyway
-				this[i] = attrValue !== null;
+				instance[i] = attrValue !== null;
 			}
 			else if (initial instanceof Function) {
-				this[i] = null;
+				instance[i] = null;
 			}
 			else {
-				this[i] = attrValue;
+				instance[i] = attrValue;
 			}
 	
-			if (!this[i] && this[i] !== 0) {
-				this[i] = (i in o)? o[i] : initial;
+			if (!instance[i] && instance[i] !== 0) {
+				instance[i] = (i in o)? o[i] : initial;
 			}
 		}
 	}
@@ -20247,23 +20305,29 @@
 			evt[j] = properties[j];
 		}
 	
-		target.dispatchEvent(evt);
+		return target.dispatchEvent(evt);
 	};
 	
 	$.regExpEscape = function (s) {
 		return s.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");
-	}
+	};
+	
+	$.siblingIndex = function (el) {
+		/* eslint-disable no-cond-assign */
+		for (var i = 0; el = el.previousElementSibling; i++);
+		return i;
+	};
 	
 	// Initialization
 	
 	function init() {
 		$$("input.awesomplete").forEach(function (input) {
-			new Awesomplete(input);
+			new _(input);
 		});
 	}
 	
 	// Are we in a browser? Check for Document constructor
-	if (typeof Document !== 'undefined') {
+	if (typeof Document !== "undefined") {
 		// DOM already loaded?
 		if (document.readyState !== "loading") {
 			init();
@@ -20278,12 +20342,12 @@
 	_.$$ = $$;
 	
 	// Make sure to export Awesomplete on self when in a browser
-	if (typeof self !== 'undefined') {
+	if (typeof self !== "undefined") {
 		self.Awesomplete = _;
 	}
 	
 	// Expose Awesomplete as a CJS module
-	if (true) {
+	if (typeof module === "object" && module.exports) {
 		module.exports = _;
 	}
 	
@@ -20587,11 +20651,10 @@
 	  return new global.google.maps.Geocoder();
 	};
 	
-	exports["default"] = {
+	exports.default = {
 	  createAutocompleteService: createAutocompleteService,
 	  createGeocoder: createGeocoder
 	};
-	module.exports = exports["default"];
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }
