@@ -20,6 +20,7 @@ window.onload = () => {
       country={ country.value }
       noMatching='Sorry, I can not find {{value}}.'
       onLocationSet={ onLocationSet }
+      style={ { color: '#0099FF' } }
       />,
     container
   );

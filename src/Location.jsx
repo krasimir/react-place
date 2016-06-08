@@ -27,6 +27,7 @@ export default class Location extends React.Component {
       <input
         type='text'
         className={ this.props.className }
+        style={ this.props.style || '' }
         placeholder={ this.props.placeholder || 'Type your location here.' }
       />
     );
@@ -159,11 +160,17 @@ export default class Location extends React.Component {
 
 };
 
+Location.defaultProps = {
+  className: '',
+  style: {}
+};
+
 Location.propTypes = {
   onLocationSet: React.PropTypes.func,
   className: React.PropTypes.string,
   placeholder: React.PropTypes.string,
   country: React.PropTypes.string,
   noMatching: React.PropTypes.string,
-  google: React.PropTypes.object
+  google: React.PropTypes.object,
+  style: React.PropTypes.object
 };

@@ -76,7 +76,8 @@
 	    placeholder: 'Where are you?',
 	    country: country.value,
 	    noMatching: 'Sorry, I can not find {{value}}.',
-	    onLocationSet: onLocationSet
+	    onLocationSet: onLocationSet,
+	    style: { color: '#0099FF' }
 	  }), container);
 	
 	  country.addEventListener('change', function () {
@@ -19754,6 +19755,7 @@
 	      return _react2.default.createElement('input', {
 	        type: 'text',
 	        className: this.props.className,
+	        style: this.props.style || '',
 	        placeholder: this.props.placeholder || 'Type your location here.'
 	      });
 	    }
@@ -19902,13 +19904,19 @@
 	exports.default = Location;
 	;
 	
+	Location.defaultProps = {
+	  className: '',
+	  style: {}
+	};
+	
 	Location.propTypes = {
 	  onLocationSet: _react2.default.PropTypes.func,
 	  className: _react2.default.PropTypes.string,
 	  placeholder: _react2.default.PropTypes.string,
 	  country: _react2.default.PropTypes.string,
 	  noMatching: _react2.default.PropTypes.string,
-	  google: _react2.default.PropTypes.object
+	  google: _react2.default.PropTypes.object,
+	  style: _react2.default.PropTypes.object
 	};
 
 /***/ },

@@ -41,6 +41,7 @@ location = ReactDOM.render(
     country='US'
     noMatching='Sorry, I can not find {{value}}.'
     onLocationSet={ onLocationSet }
+    style={ { color: '#0099FF' } }
     />,
   container
 );
@@ -63,6 +64,7 @@ function onLocationSet (data) {
 var container = document.querySelector('#container');
 var LocationComp = createLocation({
   className: 'location',
+  style: { color: '#0099FF' },
   placeholder: 'Where are you?',
   country: country.value,
   noMatching: 'Sorry, I can not find {{value}}.',
@@ -104,7 +106,8 @@ Download [react-place.min.js](https://github.com/krasimir/react-place/blob/maste
       placeholder: 'Where are you?',
       country: country.value,
       noMatching: 'Sorry, I can not find {{value}}.',
-      onLocationSet: onLocationSet
+      onLocationSet: onLocationSet,
+      style: { color: '#0099FF' }
     });
     var l = ReactDOM.render(LocationComp, container);
   };
