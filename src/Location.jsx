@@ -28,6 +28,7 @@ export default class Location extends React.Component {
         type='text'
         className={ this.props.className }
         style={ this.props.style || '' }
+        name={ this.props.name || '' }
         placeholder={ this.props.placeholder || 'Type your location here.' }
       />
     );
@@ -172,5 +173,6 @@ Location.propTypes = {
   country: React.PropTypes.string,
   noMatching: React.PropTypes.string,
   google: React.PropTypes.object,
-  style: React.PropTypes.object
+  style: React.PropTypes.object,
+  name: React.PropTypes.string
 };
