@@ -36,12 +36,14 @@ var onLocationSet = (data) => {
 
 location = ReactDOM.render(
   <Location
-    className='location'
-    placeholder='Where are you?'
     country='US'
     noMatching='Sorry, I can not find {{value}}.'
     onLocationSet={ onLocationSet }
-    style={ { color: '#0099FF' } }
+    inputProps={{
+      style: {color: '#0099FF'},
+      className='location',
+      placeholder: 'Where are your?'
+    }}
     />,
   container
 );
@@ -63,12 +65,14 @@ function onLocationSet (data) {
 
 var container = document.querySelector('#container');
 var LocationComp = createLocation({
-  className: 'location',
-  style: { color: '#0099FF' },
-  placeholder: 'Where are you?',
   country: country.value,
   noMatching: 'Sorry, I can not find {{value}}.',
-  onLocationSet: onLocationSet
+  onLocationSet: onLocationSet,
+  inputProps={{
+    style: {color: '#0099FF'},
+    className='location',
+    placeholder: 'Where are your?'
+  }}
 });
 
 var location = ReactDOM.render(LocationComp, container);
@@ -102,12 +106,14 @@ Download [react-place.min.js](https://github.com/krasimir/react-place/blob/maste
   window.onload = function () {
     var container = document.querySelector('...');
     var LocationComp = createLocation({
-      className: 'location',
-      placeholder: 'Where are you?',
       country: country.value,
       noMatching: 'Sorry, I can not find {{value}}.',
       onLocationSet: onLocationSet,
-      style: { color: '#0099FF' }
+      inputProps={{
+        style: {color: '#0099FF'},
+        className='location',
+        placeholder: 'Where are your?'
+      }}
     });
     var l = ReactDOM.render(LocationComp, container);
   };
