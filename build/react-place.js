@@ -65,6 +65,7 @@ var Location = function (_React$Component) {
         type: 'text',
         className: this.props.className,
         style: this.props.style || '',
+        name: this.props.name || '',
         placeholder: this.props.placeholder || 'Type your location here.'
       });
     }
@@ -225,7 +226,8 @@ Location.propTypes = {
   country: _react2.default.PropTypes.string,
   noMatching: _react2.default.PropTypes.string,
   google: _react2.default.PropTypes.object,
-  style: _react2.default.PropTypes.object
+  style: _react2.default.PropTypes.object,
+  name: _react2.default.PropTypes.string
 };
 module.exports = exports['default'];
 
