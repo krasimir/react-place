@@ -23,15 +23,7 @@ var compose = function () {
 export default class Location extends React.Component {
 
   render() {
-    return (
-      <input
-        type='text'
-        className={ this.props.className }
-        style={ this.props.style || '' }
-        name={ this.props.name || '' }
-        placeholder={ this.props.placeholder || 'Type your location here.' }
-      />
-    );
+    return <input type='text' {...this.props.inputProps} />;
   }
 
   componentWillMount() {
@@ -168,11 +160,8 @@ Location.defaultProps = {
 
 Location.propTypes = {
   onLocationSet: React.PropTypes.func,
-  className: React.PropTypes.string,
-  placeholder: React.PropTypes.string,
+  inputProps: React.PropTypes.object,
   country: React.PropTypes.string,
   noMatching: React.PropTypes.string,
-  google: React.PropTypes.object,
-  style: React.PropTypes.object,
-  name: React.PropTypes.string
+  google: React.PropTypes.object
 };
