@@ -15,12 +15,14 @@ window.onload = () => {
 
   location = ReactDOM.render(
     <Location
-      className='location'
-      placeholder='Where are you?'
       country={ country.value }
       noMatching='Sorry, I can not find {{value}}.'
       onLocationSet={ onLocationSet }
-      style={ { color: '#0099FF' } }
+      inputProps={{
+        style: { color: '#0099FF' },
+        className: 'location',
+        placeholder: 'Where are you?'
+      }}
       />,
     container
   );
