@@ -41,7 +41,7 @@ location = ReactDOM.render(
     onLocationSet={ onLocationSet }
     inputProps={{
       style: {color: '#0099FF'},
-      className='location',
+      className:'location',
       placeholder: 'Where are your?'
     }}
     />,
@@ -70,7 +70,7 @@ var LocationComp = createLocation({
   onLocationSet: onLocationSet,
   inputProps={{
     style: {color: '#0099FF'},
-    className='location',
+    className:'location',
     placeholder: 'Where are your?'
   }}
 });
@@ -111,7 +111,7 @@ Download [react-place.min.js](https://github.com/krasimir/react-place/blob/maste
       onLocationSet: onLocationSet,
       inputProps={{
         style: {color: '#0099FF'},
-        className='location',
+        className:'location',
         placeholder: 'Where are your?'
       }}
     });
