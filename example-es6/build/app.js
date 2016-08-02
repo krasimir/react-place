@@ -72,12 +72,14 @@
 	  var location;
 	
 	  location = _reactDom2.default.render(_react2.default.createElement(_Location2.default, {
-	    className: 'location',
-	    placeholder: 'Where are you?',
 	    country: country.value,
 	    noMatching: 'Sorry, I can not find {{value}}.',
 	    onLocationSet: onLocationSet,
-	    style: { color: '#0099FF' }
+	    inputProps: {
+	      style: { color: '#0099FF' },
+	      className: 'location',
+	      placeholder: 'Where are you?'
+	    }
 	  }), container);
 	
 	  country.addEventListener('change', function () {
@@ -19696,6 +19698,8 @@
 	  value: true
 	});
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(1);
@@ -19752,12 +19756,7 @@
 	  _createClass(Location, [{
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement('input', {
-	        type: 'text',
-	        className: this.props.className,
-	        style: this.props.style || '',
-	        placeholder: this.props.placeholder || 'Type your location here.'
-	      });
+	      return _react2.default.createElement('input', _extends({ type: 'text' }, this.props.inputProps));
 	    }
 	  }, {
 	    key: 'componentWillMount',
@@ -19911,12 +19910,10 @@
 	
 	Location.propTypes = {
 	  onLocationSet: _react2.default.PropTypes.func,
-	  className: _react2.default.PropTypes.string,
-	  placeholder: _react2.default.PropTypes.string,
+	  inputProps: _react2.default.PropTypes.object,
 	  country: _react2.default.PropTypes.string,
 	  noMatching: _react2.default.PropTypes.string,
-	  google: _react2.default.PropTypes.object,
-	  style: _react2.default.PropTypes.object
+	  google: _react2.default.PropTypes.object
 	};
 
 /***/ },
