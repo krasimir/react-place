@@ -126,3 +126,7 @@ Download [react-place.min.js](https://github.com/krasimir/react-place/blob/maste
 ```
 npm run test
 ```
+
+## Powered by Google API
+
+![powered by google](./assets/powered_by_google.png)
