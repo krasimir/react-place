@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ReactDom from 'react-dom';
+import PropTypes from 'prop-types';
 import Awesomplete from 'awesomplete';
 import Promise from 'promise-polyfill';
 import google from './vendor/google';
@@ -159,9 +160,9 @@ Location.defaultProps = {
 };
 
 Location.propTypes = {
-  onLocationSet: React.PropTypes.func,
-  inputProps: React.PropTypes.object,
-  country: React.PropTypes.string,
-  noMatching: React.PropTypes.string,
-  google: React.PropTypes.object
+  onLocationSet: PropTypes.func,
+  inputProps: PropTypes.object,
+  country: PropTypes.string,
+  noMatching: PropTypes.string,
+  google: PropTypes.object
 };
